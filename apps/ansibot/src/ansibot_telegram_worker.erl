@@ -123,8 +123,8 @@ get_command(<<"/start">>) ->
   {ok, <<"start">>, <<>>};
 get_command(<<"/help">>) ->
   {ok, <<"help">>, <<>>};
-get_command(<<"/help ", Command/binary>>) -> 
-  {ok, <<"help">>, Command};
+% get_command(<<"/help ", Command/binary>>) -> 
+%   {ok, <<"help">>, Command};
 get_command(<<"/release_notes ", Params/binary>>) ->
   {ok, <<"release_notes">>, get_command_params(Params)};
 get_command(<<"/tag ", Params/binary>>) ->

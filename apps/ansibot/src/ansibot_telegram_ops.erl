@@ -15,19 +15,18 @@ start(Conn, _Params, #{name := #{ first := F }} = Opts) ->
     Opts),
   ansibot_telegram_worker:reply(Conn, send_message, NewOpts).
 
-help(Conn, <<"release_notes">>, Opts) ->
-  HelpMessage = "For generating release notes: \r\n",
-    "*@release_tag* `TAG_NAME` (required) :: Tag of the release. Default value is date today.\r\n",
-    "*@compare_tag* `TAG_NAME` (optional) :: Where the release will be compared. Default value should be the", 
-        "last tag before *release_tag*",
-    "*@author* `AUTHOR` (optional) :: Author of the release. Default value would be your name here in telegram.",
-    "*@jira_project* `JIRA_PROJECT` (required) :: Jira project to check in commit messages.\r\n",
-  NewOpts = maps:put(text, list_to_binary(HelpMessage), Opts),
-  ansibot_telegram_worker:reply(Conn, send_message, NewOpts);
+% help(Conn, <<"release_notes">>, Opts) ->
+%   HelpMessage = "For generating release notes: \r\n",
+%     "*@release_tag* `TAG_NAME` (required) :: Tag of the release. Default value is date today.\r\n",
+%     "*@compare_tag* `TAG_NAME` (optional) :: Where the release will be compared. Default value should be the", 
+%         "last tag before *release_tag*",
+%     "*@author* `AUTHOR` (optional) :: Author of the release. Default value would be your name here in telegram.",
+%     "*@jira_project* `JIRA_PROJECT` (required) :: Jira project to check in commit messages.\r\n",
+%   NewOpts = maps:put(text, list_to_binary(HelpMessage), Opts),
+%   ansibot_telegram_worker:reply(Conn, send_message, NewOpts);
 help(Conn, _Params, Opts) ->
-  HelpMessage = <<"The available commands are as follows:\r\n",
-    "`help [command]` : Ask me the available commands.\r\n",
-    "`release_notes` : I'll generate you the release notes of your deployment.\r\n">>,
+  HelpMessage = <<"For details on the commands, please refer to this link: ",
+    "https://git.corp.voyager.ph/eapesa/ansibot">>,
   NewOpts = maps:put(text, HelpMessage, Opts),
   ansibot_telegram_worker:reply(Conn, send_message, NewOpts).
 
