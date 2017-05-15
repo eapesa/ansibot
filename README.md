@@ -26,7 +26,7 @@ Available Commands
 ### Parameters
 
 | Parameter       | Type   | Description                 |
-|+++++++++++++++++|++++++++|+++++++++++++++++++++++++++++|
+|-----------------|--------|-----------------------------|
 | *@tag_name*     | string | Tag name of your deployment |
 | *@project_name* | string | Project name                |
 
@@ -40,7 +40,7 @@ Available Commands
 ### Parameters
 
 | Parameter       | Type   | Description                 |
-|+++++++++++++++++|++++++++|+++++++++++++++++++++++++++++|
+|-----------------|--------|-----------------------------|
 | *@tag_name*     | string | Tag name of your deployment |
 | *@project_name* | string | Project name                |
 
