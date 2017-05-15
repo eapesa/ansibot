@@ -1,0 +1,10 @@
+{"1.1.0",
+[{<<"ibrowse">>,
+  {git,"git@github.com:cmullaparthi/ibrowse.git",
+       {ref,"b28542d1e326ba44bcfaf7fd6d3c7f8761d20f08"}},
+  0},
+ {<<"jsx">>,{pkg,<<"jsx">>,<<"2.8.0">>},0}]}.
+[
+{pkg_hash,[
+ {<<"jsx">>, <<"749BEC6D205C694AE1786D62CEA6CC45A390437E24835FD16D12D74F07097727">>}]}
+].

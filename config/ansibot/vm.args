@@ -1,0 +1,7 @@
+-name ansibot@127.0.0.1
+
+-setcookie ansibot_cookie
+
++K true
++A30
+-smp enable

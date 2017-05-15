@@ -1,0 +1,20 @@
+{application, ansibot,
+ [{description, "An OTP application"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, { ansibot_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    inets,
+    ssl,
+    ibrowse,
+    jsx
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, []},
+  {links, []}
+ ]}.
