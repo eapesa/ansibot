@@ -16,39 +16,56 @@ new_issue(Data, Opts) ->
   SeAssignee  = maps:get(<<"se_assignee">>, Data, list_to_binary(
       ansibot_env:get(jira_se_default, "service.engineer"))),
   EngName     = generate_name(maps:get(name, Opts, #{})),
-  Description = <<"Hi [\~", QeAssignee/binary, "],~n",
-      "FYA. The changes can be found in the release notes link. Thanks!~n~n",
-      "Hi [\~", SeAssignee/binary, "],~n",
+  Description = <<"Hi [\~", QeAssignee/binary, "],\n",
+      "FYA. The changes can be found in the release notes link. Thanks!\n\n",
+      "Hi [\~", SeAssignee/binary, "],\n",
       "Kindly check with ", EngName/binary,
-      " for the config changes in case none is indicated.~n",
-      "Else, please deploy. Thanks!~n~n",
+      " for the config changes in case none is indicated.\n",
+      "Else, please deploy. Thanks!\n\n",
       "Filed by: ", EngName/binary>>,
 
   IssueType   = list_to_binary(ansibot_env:get(jira_issue_name, "Standard Change")),
   TargetEnv   = maps:get(<<"env">>, Data, <<"Staging">>),
   ReleaseNotes = maps:get(<<"release_notes">>, Data, <<"http://release.notes.com">>),
-  Body = #{ <<"fields">> => 
+  %% TODO: CHECK THE PROPER FORMAT FOR THIS.
+  Now = <<"20170515">>,
+  Body = jsx:encode(#{ <<"fields">> => 
     #{
       <<"project">>           => #{
-        <<"key">> => ansibot_env:get(jira_project_key, "DEPLOYMENT")
+        <<"key">>   => ansibot_env:get(jira_project_key, "DEPLOYMENT")
       },
       <<"summary">>           => Summary,
       <<"description">>       => Description,
       <<"issuetype">>         => #{
-        <<"name">> => IssueType
+        <<"name">>  => IssueType
       },
       <<"assignee">>          => #{
-        <<"name">> => QeAssignee
+        <<"name">>  => QeAssignee
       },
       <<"customfield_10400">> => #{
         <<"value">> => TargetEnv
       },
       <<"customfield_10402">> => ReleaseNotes,
-      <<"customfield_10403">> => TagName
+      <<"customfield_10403">> => TagName,
+      <<"customfield_19106">> => Now
     }
-  },
-  io:format("BODY >>> ~p~n", [Body]),
-  ok.
+  }),
+  BaseUrl = ansibot_env:get(jira_api, "https://jira.com/rest/api/2/"),
+  Url = BaseUrl ++ "issue",
+  AuthKey = list_to_binary(ansibot_env:get(jira_auth_key, "Basic AUTHKEY")),
+  Headers = #{ <<"authorization">> => AuthKey, <<"content-type">> => <<"application/json">> },
+  Response = util_http:post(Url, Headers, #{}, Body),
+  io:format("CREATE ISSUE RESPONSE >>> ~p~n", [Response]),
+  case Response of
+    #{ status := 200 } ->
+      io:format("CREATED! 200~n", []),
+      ok;
+    #{ status := 201 } ->
+      io:format("CREATED! 201~n", []),
+      ok;
+    Error ->
+      Error
+  end.
 
 generate_name(#{ first := F, last := L }) -> <<F/binary, " ", L/binary>>;
 generate_name(_) -> <<"Conan Edogawa">>.
