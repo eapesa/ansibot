@@ -125,7 +125,8 @@ organize(#{ <<"project_name">> := Name,
       <<"diff from ", TagCompare/binary, " to ", Tag/binary>>, [global]),
   upload_to_s3(NewTemplate7, Params).
 
-upload_to_s3(Html, #{ <<"project_name">> := Name, <<"tag_name">> := Tag }) ->
+upload_to_s3(Html, #{ <<"env">> := Env, <<"project_name">> := Name,
+    <<"tag_name">> := Tag }) ->
   {ok, AwsConfig} = erlcloud_aws:auto_config(),
   ServiceConfig   = erlcloud_aws:service_config(s3, list_to_binary(
     ansibot_env:get(dynamodb_region, "ap-southeast-1")), AwsConfig),
@@ -134,8 +135,8 @@ upload_to_s3(Html, #{ <<"project_name">> := Name, <<"tag_name">> := Tag }) ->
   AwsS3Url  = ansibot_env:get(aws_s3_url, "http://bucket.s3.amazonaws.com/"),
   AwsBucket = ansibot_env:get(aws_s3_bucket, "bucket"),
   AwsS3Key  = ansibot_env:get(aws_s3_key, "key"),
-  AwsS3Key2 = AwsS3Key ++ "/" ++ binary_to_list(Name) ++ "/"
-      ++ binary_to_list(Tag) ++ ".html",
+  AwsS3Key2 = AwsS3Key ++ "/" ++ binary_to_list(Env) ++ "/"
+      ++ binary_to_list(Name) ++ "/" ++ binary_to_list(Tag) ++ ".html",
   Size = integer_to_binary(size(Html)),
   Response = erlcloud_s3:put_object(AwsBucket, AwsS3Key2, binary_to_list(Html),
     [{acl, AwsS3Acl}], [{"content-type", "text/html"}, {"content-length", Size}],
