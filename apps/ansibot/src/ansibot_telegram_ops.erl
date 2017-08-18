@@ -30,8 +30,10 @@ help(Conn, _Params, Opts) ->
   NewOpts = maps:put(text, HelpMessage, Opts),
   ansibot_telegram_worker:reply(Conn, send_message, NewOpts).
 
-release_notes(Conn, Params, Opts) ->
-  case ansibot_release:generate(Params) of
+release_notes(Conn, Params, #{ name := #{ first := F, last := L }} = Opts) ->
+  Name = <<F/binary, " ", L/binary>>,
+  Result = ansibot_release:generate(maps:put(<<"author">>, Name, Params)),
+  case Result of
     {ok, DownloadUrl} ->
       Text = <<"Successfully created release notes!\n\nYou may access it here: ",
           DownloadUrl/binary>>,
