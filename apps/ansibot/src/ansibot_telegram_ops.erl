@@ -11,14 +11,14 @@ process(Conn, <<"file">>, Params, Opts)   -> file(Conn, Params, Opts);
 process(Conn, <<"release_notes">>, Params, Opts) -> release_notes(Conn, Params, Opts).
 
 start(Conn, _Params, #{name := #{ first := F }} = Opts) ->
-  NewOpts = maps:put(text, <<"Hello *", F/binary, "*! How can I help you with your deployment?">>, 
+  NewOpts = maps:put(text, <<"Hello *", F/binary, "*! How can I help you with your deployment?">>,
     Opts),
   ansibot_telegram_worker:reply(Conn, send_message, NewOpts).
 
 % help(Conn, <<"release_notes">>, Opts) ->
 %   HelpMessage = "For generating release notes: \r\n",
 %     "*@release_tag* `TAG_NAME` (required) :: Tag of the release. Default value is date today.\r\n",
-%     "*@compare_tag* `TAG_NAME` (optional) :: Where the release will be compared. Default value should be the", 
+%     "*@compare_tag* `TAG_NAME` (optional) :: Where the release will be compared. Default value should be the",
 %         "last tag before *release_tag*",
 %     "*@author* `AUTHOR` (optional) :: Author of the release. Default value would be your name here in telegram.",
 %     "*@jira_project* `JIRA_PROJECT` (required) :: Jira project to check in commit messages.\r\n",
@@ -30,9 +30,19 @@ help(Conn, _Params, Opts) ->
   NewOpts = maps:put(text, HelpMessage, Opts),
   ansibot_telegram_worker:reply(Conn, send_message, NewOpts).
 
-release_notes(_Conn, Params, _Opts) ->
-  io:format("Params: ~p~n", [Params]),
-  ok.
+release_notes(Conn, Params, Opts) ->
+  case ansibot_release:generate(Params) of
+    {ok, DownloadUrl} ->
+      Text = <<"Successfully created release notes!\n\nYou may access it here: ",
+          DownloadUrl/binary>>,
+      NewOpts = maps:put(text, Text, Opts),
+      ansibot_telegram_worker:reply(Conn, send_message, NewOpts);
+    Error ->
+      io:format("[tag] Encountered error: ~p~n", [Error]),
+      NewOpts = maps:put(text, <<"Encountered some errors while generating release ",
+          " notes. Please try again later.">>, Opts),
+      ansibot_telegram_worker:reply(Conn, send_message, NewOpts)
+  end.
 
 tag(Conn, #{ <<"project_name">> := ProjectName, <<"tag_name">> := TagName }, Opts) ->
   case ansibot_github:new_tag(ProjectName, TagName) of
@@ -67,7 +77,7 @@ build(Conn, _Data, Opts) ->
 file(Conn, #{ <<"project_name">> := _ProjectName, <<"tag_name">> := _TagName,
     <<"env">> := _Env, <<"release_notes">> := _Notes } = Data, Opts) ->
   case ansibot_jira:new_issue(Data, Opts) of
-    ok -> 
+    ok ->
       NewOpts = maps:put(text, <<"Successfully created issue in Jira!">>, Opts),
       ansibot_telegram_worker:reply(Conn, send_message, NewOpts);
     Error ->

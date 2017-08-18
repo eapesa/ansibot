@@ -1,17 +1,27 @@
 [
   {ansibot, [
     {poll_interval, 5000},
+
     {telegram_token, "_TELEGRAM:TOKEN_"},
     {telegram_bot_api, "https://api.telegram.org/bot"},
+
     {github_api, "https://_GIT_HOST_/api/v3/"},
     {github_token, "_GIT_TOKEN"},
     {github_repo_ref, "master"},
+
     {jenkins_api, "https://_JENKINS_HOST/job/"},
+
     {jira_api, "https://_JIRA_HOST_/rest/api/2/"},
     {jira_auth_key, "Basic _JIRA_AUTH_KEY_"},
     {jira_project_key, "_JIRA_PROJECT_"},
     {jira_issue_name, "_JIRA_ISSUE_NAME_"},
     {jira_qe_default, "qe.default"},
-    {jira_se_default, "se.default"}
+    {jira_se_default, "se.default"},
+
+
+    {aws_s3_acl, public_read},
+    {aws_s3_bucket, "_S3_BUCKET_"},
+    {aws_s3_key, "_S3_KEY_"},
+    {aws_s3_url, "_S3_URL_"}
   ]}
 ].

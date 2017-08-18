@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#trigger-on").on("click", function() {
+        $(this).addClass("hidden");
+        $("#trigger-off").removeClass("hidden");
+        $("#more-details").removeClass("hidden");
+      });
+
+      $("#trigger-off").on("click", function() {
+        $(this).addClass("hidden");
+        $("#more-details").addClass("hidden");
+        $("#trigger-on").removeClass("hidden");
+      });
+    });
+  </script>
+  <link id="stylesheet" rel="stylesheet" href="{{STYLESHEET}}">
+  <body>
+    <div id="div-main">
+      <div id="div-header">
+        <h2 id="h-title-1">{{TITLE_1}}</h2>
+        <h1 id="h-title-2">{{TITLE_2}}</h1>
+        <br><br>
+        <h2 id="h-author">Authored by: {{AUTHOR}}</h2>
+      <div>
+    </div>
+
+    <br><hr>
+    <div id="div-issues">
+      <div id="div-issues-header" class="div-header">
+        <h2>JIRA Issues Covered:</h2>
+      </div>
+
+      <div id="div-issues-content">
+        {{JIRA_ISSUES}}
+      </div>
+    </div>
+
+    <div id="trigger-on" class="trigger">
+      <label>&darr; More Details...</label>
+    </div>
+    <div id="trigger-off" class="trigger hidden">
+      <label>&uarr; Less Details...</label>
+    </div>
+
+    <div id="more-details" class="hidden">
+      <br><hr>
+      <div id="div-commits">
+        <div id="div-commits-header" class="div-header">
+          <h2>Tag Commits</h2>
+        </div>
+
+        <div id="div-commits-content">
+          {{TAG_COMMITS}}
+        </div>
+      </div>
+
+      <br><hr>
+
+      <div id="div-diff">
+        <div id="div-diff-header" class="div-header">
+          <h2>{{DIFF_TITLE}}</h2>
+        </div>
+
+        <div id="div-diff-content">
+          {{TAG_DIFFS}}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

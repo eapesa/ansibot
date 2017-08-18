@@ -1,10 +1,18 @@
 {"1.1.0",
-[{<<"ibrowse">>,
+[{<<"base16">>,{pkg,<<"base16">>,<<"1.0.0">>},1},
+ {<<"eini">>,{pkg,<<"eini">>,<<"1.2.4">>},1},
+ {<<"erlcloud">>,{pkg,<<"erlcloud">>,<<"2.2.5">>},0},
+ {<<"ibrowse">>,
   {git,"git@github.com:cmullaparthi/ibrowse.git",
        {ref,"b28542d1e326ba44bcfaf7fd6d3c7f8761d20f08"}},
   0},
- {<<"jsx">>,{pkg,<<"jsx">>,<<"2.8.0">>},0}]}.
+ {<<"jsx">>,{pkg,<<"jsx">>,<<"2.8.0">>},0},
+ {<<"lhttpc">>,{pkg,<<"lhttpc">>,<<"1.5.1">>},1}]}.
 [
 {pkg_hash,[
- {<<"jsx">>, <<"749BEC6D205C694AE1786D62CEA6CC45A390437E24835FD16D12D74F07097727">>}]}
+ {<<"base16">>, <<"283644E2B21BD5915ACB7178BED7851FB07C6E5749B8FAD68A53C501092176D9">>},
+ {<<"eini">>, <<"ABD64A0533398A6D714D21219BB85F2D41FDB42665AC4080939B7BFA8E55F386">>},
+ {<<"erlcloud">>, <<"0D88C3C1923A82EC054739443B20134BFB791B868992B3743A14ED0DD48B8A14">>},
+ {<<"jsx">>, <<"749BEC6D205C694AE1786D62CEA6CC45A390437E24835FD16D12D74F07097727">>},
+ {<<"lhttpc">>, <<"2137CB82D123751B21CC0461A00734CD32CB470BC6278BA139EE13C1ECC3C2B1">>}]}
 ].

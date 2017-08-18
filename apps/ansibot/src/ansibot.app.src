@@ -9,7 +9,8 @@
     inets,
     ssl,
     ibrowse,
-    jsx
+    jsx,
+    erlcloud
    ]},
   {env,[]},
   {modules, []},
