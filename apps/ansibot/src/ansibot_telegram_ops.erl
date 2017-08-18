@@ -35,8 +35,8 @@ release_notes(Conn, Params, #{ name := #{ first := F, last := L }} = Opts) ->
   Result = ansibot_release:generate(maps:put(<<"author">>, Name, Params)),
   case Result of
     {ok, DownloadUrl} ->
-      Text = <<"Successfully created release notes! You may access it here: ",
-          DownloadUrl/binary>>,
+      Text    = <<"Successfully created release notes! Access it [here](",
+          DownloadUrl/binary, ").">>,
       NewOpts = maps:put(text, Text, Opts),
       ansibot_telegram_worker:reply(Conn, send_message, NewOpts);
     Error ->
