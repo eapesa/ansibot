@@ -1,7 +1,9 @@
 ansibot
 =======
 
-An OTP application
+An OTP application for automating creation of tags, builds and release notes.
+
+This application intends to hasten the deployment process of the team.
 
 Build
 -----
@@ -43,4 +45,21 @@ Available Commands
 |-----------------|--------|-----------------------------|
 | *@tag_name*     | string | Tag name of your deployment |
 | *@project_name* | string | Project name                |
+
+
+## /release_notes 
+
+### Example Syntax
+
+`/release_notes @tag_name TAG_NAME @project_name PROJECT_NAME`
+
+### Parameters
+
+| Parameter       | Required | Description                 |
+|-----------------|----------|-----------------------------|
+| *@tag_name*     | true     | Tag name of your deployment |
+| *@project_name* | true     | Project name                |
+| *@env*          | false    | staging or prod. Defaults to *staging*. |
+| *@jira_project* | false    | Jira project namespace. Defaults to *CHATBOTS*. |
+| *@tag_compare*  | false    | If provided, the diff result of the release notes would be the diff between *tag_name* and *tag_compare*. Defaults to tag before *tag_name* |
 
