@@ -3,7 +3,9 @@ ansibot
 
 An OTP application for automating creation of tags, builds and release notes.
 
-This application intends to hasten the deployment process of the team.
+This application intends to hasten the deployment process of the team by automating creation of release notes, git tags and jenkins build.
+
+*NOTE: There might be changes to implement to adjust third party services like gitlab.*
 
 Build
 -----
@@ -11,10 +13,12 @@ Build
     $ ./rebar3 compile
     $ ./rebar3 release -n ansibot
 
+
 Deploy
 ------
 
     $ _build/default/rel/ansibot/bin/ansibot start | console | stop
+    
     
 Available Commands
 ------------------
