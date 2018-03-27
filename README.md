@@ -1,11 +1,11 @@
 ansibot
 =======
 
-An OTP application for automating creation of tags, builds and release notes.
+Ansibot is a server application connected to `@ansibottiebot` Telegram bot. It is an OTP application that intends to hasten creation of release notes, git tags and jenkins build. 
 
-This application intends to hasten the deployment process of the team by automating creation of release notes, git tags and jenkins build.
+*NOTE: This bot is specific to our deployment tools.*
 
-*NOTE: There might be changes to implement to adjust third party services like gitlab.*
+*NOTE: Release notes highly depend on jira for the stories to compile in the notes. This application therefore connects to 3 third party services: jira, gitlab and jenkins.*
 
 Build
 -----
